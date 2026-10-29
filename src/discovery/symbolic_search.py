@@ -83,3 +83,4 @@ class SymbolicExpressionDiscovery(DiscoveryMethod):
                 continue
 
         return results
+

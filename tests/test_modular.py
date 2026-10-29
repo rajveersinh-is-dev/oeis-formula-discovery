@@ -20,3 +20,4 @@ def test_alternating_parity():
     cands = md.discover("TEST_PARITY", terms, 0)
     assert len(cands) >= 1
     assert any("periodic with period 2" in c.formula_str for c in cands)
+

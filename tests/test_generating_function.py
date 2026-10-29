@@ -14,3 +14,4 @@ def test_fibonacci_generating_function():
     # For Fibonacci G(x) = x / (1 - x - x^2)
     assert "x" in best.formula_str
     assert "x^2" in best.formula_str
+

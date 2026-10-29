@@ -25,3 +25,4 @@ def test_ranking_priority():
 
     ranked = CandidateRanker.rank_candidates([cand_asymp, cand_poly])
     assert ranked[0].id == "c1"  # Polynomial outranks heuristic asymptotic
+

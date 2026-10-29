@@ -24,3 +24,4 @@ class ScanCheckpoint:
                 INSERT OR REPLACE INTO scan_status (a_number, status, candidates_count, error_message)
                 VALUES (?, ?, ?, ?)
             """, (a_num, status, count, error))
+

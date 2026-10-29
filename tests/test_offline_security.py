@@ -26,3 +26,4 @@ def test_zero_network_during_discovery(monkeypatch):
     # If any network connection is attempted, it will trigger RuntimeError
     cands = engine.analyze_sequence(rec)
     assert len(cands) >= 1
+

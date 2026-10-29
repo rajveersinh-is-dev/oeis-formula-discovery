@@ -30,3 +30,4 @@ class DiscoveryMethod(ABC):
             List of structured CandidateFormula instances found.
         """
         pass
+

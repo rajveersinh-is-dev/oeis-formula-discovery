@@ -145,3 +145,4 @@ class OEISParser:
             except ValueError:
                 pass
         return 0, 1
+

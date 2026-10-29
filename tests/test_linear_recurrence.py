@@ -23,3 +23,4 @@ def test_pell_recurrence():
     best = cands[0]
     assert best.verification_status == VerificationStatus.EXACT_MATCH
     assert best.recurrence_coeffs == [2, 1]  # a(n) = 2*a(n-1) + a(n-2)
+

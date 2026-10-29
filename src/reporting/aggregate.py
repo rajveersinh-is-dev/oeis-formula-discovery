@@ -38,3 +38,4 @@ class AggregateReporter:
             "Report generated locally by `oeis-formula-discovery`. Zero AI services utilized.",
         ])
         return "\n".join(lines)
+

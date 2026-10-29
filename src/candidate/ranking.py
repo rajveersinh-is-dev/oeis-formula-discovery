@@ -63,3 +63,4 @@ class CandidateRanker:
         )]
 
         return sorted(valid, key=cls.score_candidate)
+

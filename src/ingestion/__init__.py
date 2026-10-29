@@ -5,3 +5,4 @@ from .db import OEISDatabase
 from .downloader import OEISDownloader
 
 __all__ = ["OEISParser", "OEISRecord", "OEISDatabase", "OEISDownloader"]
+

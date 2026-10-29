@@ -69,3 +69,4 @@ class ModularPatternDiscovery(DiscoveryMethod):
             if all(seq[i] == seq[i % p] for i in range(n)):
                 return p
         return None
+

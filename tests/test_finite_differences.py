@@ -41,3 +41,4 @@ def test_offset_handling():
     assert len(cands) >= 1
     best = cands[0]
     assert best.evaluator(10) == 100
+

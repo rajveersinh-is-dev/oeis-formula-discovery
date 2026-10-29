@@ -78,3 +78,4 @@ class GeneratingFunctionDiscovery(DiscoveryMethod):
             results.append(cand_gf)
 
         return results
+

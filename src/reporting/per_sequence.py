@@ -59,3 +59,4 @@ class PerSequenceReporter:
         ])
 
         return "\n".join(lines)
+

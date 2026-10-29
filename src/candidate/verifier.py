@@ -70,3 +70,4 @@ class Verifier:
             matched += 1
 
         return True, matched, "All terms matched recurrence exactly"
+

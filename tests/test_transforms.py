@@ -18,3 +18,4 @@ def test_partial_sums():
     terms = [2 + 4 * n for n in range(10)]
     cands = td.discover("TEST_PS", terms, 0)
     assert len(cands) >= 1
+

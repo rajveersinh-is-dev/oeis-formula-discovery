@@ -125,3 +125,4 @@ class FiniteDifferenceDiscovery(DiscoveryMethod):
             evaluator=eval_poly,
             valid_from_index=start_index,
         )
+

@@ -26,3 +26,4 @@ def test_factorials():
     cands = sd.discover("A000142", terms, 0)
     assert len(cands) >= 1
     assert any("n!" in c.formula_str for c in cands)
+

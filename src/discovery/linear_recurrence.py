@@ -136,3 +136,4 @@ class LinearRecurrenceDiscovery(DiscoveryMethod):
         if len(c) <= 1:
             return None
         return [-coeff for coeff in c[1:]]
+

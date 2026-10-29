@@ -65,3 +65,4 @@ class AsymptoticGrowthDiscovery(DiscoveryMethod):
             pass
 
         return results
+

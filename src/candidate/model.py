@@ -50,3 +50,4 @@ class CandidateFormula:
             "valid_from_index": self.valid_from_index,
             "details": self.details,
         }
+

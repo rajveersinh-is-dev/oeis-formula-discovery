@@ -179,3 +179,4 @@ class OEISDatabase:
                 "exact_matches": exact_matches,
                 "method_counts": method_counts,
             }
+

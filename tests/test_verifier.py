@@ -45,3 +45,4 @@ def test_verifier_recurrence_rejection():
     )
     assert is_exact is False
     assert "Recurrence mismatch" in err
+

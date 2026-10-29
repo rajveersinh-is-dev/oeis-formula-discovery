@@ -31,3 +31,4 @@ class ResultExporter:
             writer.writeheader()
             for c in candidates:
                 writer.writerow(c.to_dict())
+

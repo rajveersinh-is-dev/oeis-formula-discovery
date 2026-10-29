@@ -59,3 +59,4 @@ def test_parse_negative_terms():
     rec = OEISParser.parse_entry_lines(lines)
     assert rec is not None
     assert rec.terms == [-5, -3, -1, 1, 3, 5, 7, 9]
+
