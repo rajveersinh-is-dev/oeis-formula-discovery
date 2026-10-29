@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use this software in your research, please cite it as below."
+authors:
+  - family-names: "Pardeshi"
+    given-names: "Rajveersinh"
+    orcid: "https://orcid.org/0000-0000-0000-0000"
+title: "OEIS Formula Discovery Lab: A Fully Local, Deterministic Mathematical Discovery Engine"
+version: 0.1.0
+date-released: 2026-10-29
+url: "https://github.com/rajveersinh-is-dev/oeis-formula-discovery"
+keywords:
+  - "mathematics"
+  - "number theory"
+  - "integer sequences"
+  - "OEIS"
+  - "symbolic computation"
+  - "recurrence discovery"
+  - "generating functions"
+  - "deterministic discovery"
+license: "MIT"
