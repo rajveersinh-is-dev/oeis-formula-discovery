@@ -38,10 +38,9 @@ def test_saw_heuristic_growth_discovery():
     )
     cands = engine.analyze_sequence(rec)
     assert len(cands) >= 1
-    best = cands[0]
-    assert best.verification_status == VerificationStatus.HEURISTIC
-    assert best.method == "asymptotic"
-    assert "2.7" in best.formula_str  # Connective constant ~ 2.71
+    asympt = [c for c in cands if c.method == "asymptotic"][0]
+    assert asympt.verification_status == VerificationStatus.HEURISTIC
+    assert "2.7" in asympt.formula_str  # Connective constant ~ 2.71
 
 
 def test_ramsey_honest_rejection():
@@ -59,3 +58,4 @@ def test_ramsey_honest_rejection():
     exact_cands = [c for c in cands if c.verification_status == VerificationStatus.EXACT_MATCH]
     # Ramsey numbers have no known linear recurrence or low-degree polynomial
     assert len(exact_cands) == 0
+

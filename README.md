@@ -40,13 +40,17 @@ The **OEIS Formula Discovery Lab** is an automated computational mathematics res
 │ 1. Finite Differences      │ Newton series: deg <= 6            │
 │ 2. Quasipolynomials        │ Multisection branches: period <= 6 │
 │ 3. Linear Recurrences      │ Berlekamp-Massey over Q: k <= 8    │
-│ 4. Holonomic Recurrences   │ Rational nullspace P-finite: k,d<=4│
-│ 5. Nonlinear Recurrences   │ Univariate poly & Somos-k bilinear │
-│ 6. Generating Functions    │ Padé rational G(x) = P(x)/Q(x)     │
-│ 7. Symbolic Grammar        │ Bounded DAG: powers, factorials    │
-│ 8. Transforms              │ Binomial, inverse binomial, sums   │
-│ 9. Modular Regimes         │ Cycle detection: mod m <= 16       │
-│ 10. Asymptotic Analysis    │ Log-linear heuristic regression    │
+│ 4. Inhomogeneous Recurr.   │ Rational driving poly: P(n) in Q[n]│
+│ 5. Holonomic Recurrences   │ Rational nullspace P-finite: k,d<=4│
+│ 6. Nonlinear Recurrences   │ Univariate poly & Somos-k bilinear │
+│ 7. Algebraic Gen. Funcs    │ Hermite-Pade quadratic: A2*G^2+... │
+│ 8. Convolution Recurr.     │ Cauchy & binomial self-convolutions│
+│ 9. Multiplicative Recurr.  │ Exact power products: a(n-1)^p*... │
+│ 10. Generating Functions   │ Pade rational G(x) = P(x)/Q(x)     │
+│ 11. Symbolic Grammar       │ Bounded DAG: powers, factorials    │
+│ 12. Transforms             │ Binomial, inverse binomial, sums   │
+│ 13. Modular Regimes        │ Cycle detection: mod m <= 16       │
+│ 14. Asymptotic Analysis    │ Log-linear heuristic regression    │
 └────────────────────────────┴────────────────────────────────────┘
              │
              ▼
@@ -68,12 +72,16 @@ The **OEIS Formula Discovery Lab** is an automated computational mathematics res
 | `finite_differences` | Newton forward difference series over $\mathbb{Q}$ | $a(n) = \sum_{k=0}^d \Delta^k a(0) \binom{n - n_0}{k}$ |
 | `quasipolynomial` | Periodic multisection forward differences | $a(m \cdot k + r) = P_r(k)$ for periodic branches ($m \le 6$) |
 | `linear_recurrence` | Berlekamp-Massey minimal connection polynomial over $\mathbb{Q}$ | $a(n) = \sum_{j=1}^k c_j a(n-j)$ |
+| `inhomogeneous_recurrence` | Linear recurrence with rational driving polynomial | $a(n) = \sum_{j=1}^k c_j a(n-j) + P(n)$ ($P \in \mathbb{Q}[n]$) |
 | `holonomic` | Rational nullspace over $\mathbb{Q}$ for P-finite systems | $\sum_{j=0}^k p_j(n) a(n-j) = 0$ ($p_j \in \mathbb{Z}[n]$) |
 | `nonlinear_recurrence` | Exact Vandermonde & bilinear Somos elimination | $a(n) = P(a(n-1))$ or $a(n)a(n-k) = \sum c_j a(n-j)a(n-k+j)$ |
+| `algebraic_generating_function` | Hermite-Padé quadratic curve relation over $\mathbb{Q}$ | $A_2(x) G(x)^2 + A_1(x) G(x) + A_0(x) = 0$ ($A_i \in \mathbb{Z}[x]$) |
+| `convolution_recurrence` | Cauchy and binomial self-convolution equations | $a(n) = \sum_{k=0}^{n-1} a(k)a(n-1-k)$ or $\sum_{k=0}^{n-1} \binom{n-1}{k} a(k)$ |
+| `multiplicative_recurrence` | Exact multiplicative power recurrence | $a(n) = c \cdot \prod_{j=1}^k a(n-j)^{p_j}$ |
 | `generating_function` | Padé approximation from recurrence coefficients | $G(x) = \frac{P(x)}{Q(x)}$ |
 | `symbolic_search` | Canonicalized DAG grammar search | Exponential ($c^n$), factorials ($n!$), polygonal |
 | `transforms` | Binomial & prefix-sum transformations | $B(a)_n = \sum_{k=0}^n \binom{n}{k} a_k$ |
-| `modular` | Residue class cycle detection | Periodicity modulo $m \in [2, 16]$ |
+| `modular` | Residue class cycle detection with transient prefixes | Periodicity $a(n+p) \equiv a(n) \pmod m$ for $n \ge n_0 + t$ |
 | `asymptotic` | Logarithmic / exponential regression | Heuristic growth rate classification $C r^n$ |
 
 ---
@@ -118,7 +126,7 @@ Parses records and builds local SQLite target index.
 ```bash
 oeis-discovery discover A000045
 ```
-Runs all 10 discovery algorithms against the target sequence and outputs ranked candidates.
+Runs all 14 deterministic discovery engines against the target sequence and outputs ranked candidates.
 
 ### List Unsolved Target Sequences
 ```bash
