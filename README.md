@@ -38,19 +38,26 @@ The **OEIS Formula Discovery Lab** is an automated computational mathematics res
 │                 DETERMINISTIC DISCOVERY ENGINE                  │
 ├────────────────────────────┬────────────────────────────────────┤
 │ 1. Finite Differences      │ Newton series: deg <= 6            │
-│ 2. Quasipolynomials        │ Multisection branches: period <= 6 │
-│ 3. Linear Recurrences      │ Berlekamp-Massey over Q: k <= 8    │
-│ 4. Inhomogeneous Recurr.   │ Rational driving poly: P(n) in Q[n]│
-│ 5. Holonomic Recurrences   │ Rational nullspace P-finite: k,d<=4│
-│ 6. Nonlinear Recurrences   │ Univariate poly & Somos-k bilinear │
-│ 7. Algebraic Gen. Funcs    │ Hermite-Pade quadratic: A2*G^2+... │
-│ 8. Convolution Recurr.     │ Cauchy & binomial self-convolutions│
-│ 9. Multiplicative Recurr.  │ Exact power products: a(n-1)^p*... │
-│ 10. Generating Functions   │ Pade rational G(x) = P(x)/Q(x)     │
-│ 11. Symbolic Grammar       │ Bounded DAG: powers, factorials    │
-│ 12. Transforms             │ Binomial, inverse binomial, sums   │
-│ 13. Modular Regimes        │ Cycle detection: mod m <= 16       │
-│ 14. Asymptotic Analysis    │ Log-linear heuristic regression    │
+│ 2. Symbolic Grammar        │ Bounded DAG: powers, factorials    │
+│ 3. Quasipolynomials        │ Multisection branches: period <= 6 │
+│ 4. Linear Recurrences      │ Berlekamp-Massey over Q: k <= 8    │
+│ 5. Divide-and-Conquer      │ k-Regular functional equations b<=5│
+│ 6. Interleaved Recurr.     │ Multisection linear branches m<=4  │
+│ 7. Inhomogeneous Recurr.   │ Rational driving poly & exp forcing│
+│ 8. Continued Fractions     │ Variable/periodic partial quotients│
+│ 9. Rational Recurrences    │ Riccati, Lyness & bilinear maps    │
+│ 10. Holonomic Recurrences  │ Rational nullspace P-finite: k,d<=4│
+│ 11. Nonlinear Recurrences  │ Univariate poly & Somos-k bilinear │
+│ 12. Nested Recurrences     │ Meta-Fibonacci (parametric families│
+│ 13. Algebraic Gen. Funcs   │ Hermite-Pade algebraic curve deg<=4│
+│ 14. Modular Products       │ Infinite product / Euler transforms│
+│ 15. q-Series / q-Recurr.   │ q-Difference & basic hypergeom.    │
+│ 16. Convolution Recurr.    │ Cauchy & binomial self-convolutions│
+│ 17. Multiplicative Recurr. │ Exact power products: a(n-1)^p*... │
+│ 18. Generating Functions   │ Pade rational G(x) = P(x)/Q(x)     │
+│ 19. Transforms             │ Binomial, inverse binomial, sums   │
+│ 20. Modular Regimes        │ Cycle detection: mod m <= 16       │
+│ 21. Asymptotic Analysis    │ Log-linear heuristic regression    │
 └────────────────────────────┴────────────────────────────────────┘
              │
              ▼
@@ -72,10 +79,17 @@ The **OEIS Formula Discovery Lab** is an automated computational mathematics res
 | `finite_differences` | Newton forward difference series over $\mathbb{Q}$ | $a(n) = \sum_{k=0}^d \Delta^k a(0) \binom{n - n_0}{k}$ |
 | `quasipolynomial` | Periodic multisection forward differences | $a(m \cdot k + r) = P_r(k)$ for periodic branches ($m \le 6$) |
 | `linear_recurrence` | Berlekamp-Massey minimal connection polynomial over $\mathbb{Q}$ | $a(n) = \sum_{j=1}^k c_j a(n-j)$ |
-| `inhomogeneous_recurrence` | Linear recurrence with rational driving polynomial | $a(n) = \sum_{j=1}^k c_j a(n-j) + P(n)$ ($P \in \mathbb{Q}[n]$) |
+| `divide_and_conquer` | Mahler-type $k$-regular functional equations in base $b \in \{2, 3\}$ | $a(b \cdot n + r) = c_{r, 0} a(n) + c_{r, 1} a(n+1) + e_r n + d_r$ |
+| `interleaved_recurrence` | Multisection linear recurrences across residue classes | $a(m \cdot k + r) = \sum_{j=1}^{o_r} c_{r, j} a(m(k-j) + r)$ |
+| `inhomogeneous_recurrence` | Linear recurrence with rational driving poly or exponential forcing | $a(n) = \sum_{j=1}^k c_j a(n-j) + P(n) + b \cdot r^n$ |
+| `continued_fraction` | 3-term continued fraction relations with variable partial quotients | $a(n) = q(n) a(n-1) + s a(n-2)$ ($q(n)$ AP, periodic, or quasipoly) |
+| `rational_recurrence` | Riccati, Lyness, and general bilinear difference equations | $a(n) = \frac{P(a(n-1), \dots)}{Q(a(n-1), \dots)}$ or $a(n)a(n-k) = \dots$ |
 | `holonomic` | Rational nullspace over $\mathbb{Q}$ for P-finite systems | $\sum_{j=0}^k p_j(n) a(n-j) = 0$ ($p_j \in \mathbb{Z}[n]$) |
 | `nonlinear_recurrence` | Exact Vandermonde & bilinear Somos elimination | $a(n) = P(a(n-1))$ or $a(n)a(n-k) = \sum c_j a(n-j)a(n-k+j)$ |
-| `algebraic_generating_function` | Hermite-Padé quadratic curve relation over $\mathbb{Q}$ | $A_2(x) G(x)^2 + A_1(x) G(x) + A_0(x) = 0$ ($A_i \in \mathbb{Z}[x]$) |
+| `nested_recurrence` | Parametric meta-Fibonacci families (Hofstadter, Conway, Golomb) | $a(n) = a(n - a(n-p)) + a(n - a(n-q))$ or $a(n) = n - a(a(n-1))$ |
+| `algebraic_generating_function` | Hermite-Padé algebraic curve relations over $\mathbb{Q}$ (deg $\le 4$) | $\sum_{j=0}^D A_j(x) G(x)^j = 0$ ($A_j \in \mathbb{Z}[x]$) |
+| `modular_product` | Infinite product expansions & Euler transforms via log-derivative | $G(x) = c x^{n_0} \prod_{k=1}^\infty (1 - x^k)^{-c_k}$ (Partitions, Dedekind $\eta$, $\tau$) |
+| `q_series` | $q$-Difference & $q$-holonomic recurrences over $\mathbb{Q}$ | $\sum_{j=0}^k P_j(q^n) a(n-j) = 0$ ($q$-Fibonacci, $q$-factorials) |
 | `convolution_recurrence` | Cauchy and binomial self-convolution equations | $a(n) = \sum_{k=0}^{n-1} a(k)a(n-1-k)$ or $\sum_{k=0}^{n-1} \binom{n-1}{k} a(k)$ |
 | `multiplicative_recurrence` | Exact multiplicative power recurrence | $a(n) = c \cdot \prod_{j=1}^k a(n-j)^{p_j}$ |
 | `generating_function` | Padé approximation from recurrence coefficients | $G(x) = \frac{P(x)}{Q(x)}$ |
@@ -177,26 +191,47 @@ All benchmarks are measured in-process using high-resolution hardware performanc
 | `A000129` | Pell Numbers | $a(n) = 2a(n-1) + a(n-2)$ | Exact Match (18 terms) | 0.74 |
 | `A000079` | Powers of 2 | $a(n) = 2^n$ | Exact Match (22 terms) | 0.31 |
 
-### 6.2 Hard Sequences Benchmark Suite (P-Finite, Quasipolynomial, Nonlinear)
+### 6.2 Hard Sequences Benchmark Suite (P-Finite, Quasipolynomial, Continued Fractions, 2-Regular, Rational & Nested)
 | A-Number | Sequence Family | Mathematical Class | Discovered Representation | Method | Verification | Time (ms) |
 | :--- | :--- | :--- | :--- | :--- | :--- | :---: |
-| `A000108` | Catalan numbers | Holonomic (Order 1, Deg 1) | $(n+1)a(n) - (4n-2)a(n-1) = 0$ | `holonomic` | Exact (25 terms) | 2.88 |
-| `A001006` | Motzkin numbers | Holonomic (Order 2, Deg 1) | $(n+2)a(n) - (2n+1)a(n-1) - 3(n-1)a(n-2) = 0$ | `holonomic` | Exact (25 terms) | 4.84 |
-| `A001850` | Central Delannoy | Holonomic (Order 2, Deg 1) | $n a(n) - (6n-3)a(n-1) + (n-1)a(n-2) = 0$ | `holonomic` | Exact (25 terms) | 5.15 |
-| `A006318` | Large Schröder | Holonomic (Order 2, Deg 1) | $(n+1)a(n) - (6n-3)a(n-1) + (n-2)a(n-2) = 0$ | `holonomic` | Exact (25 terms) | 5.31 |
-| `A000166` | Derangements | Holonomic (Order 2, Deg 1) | $a(n) - (n-1)a(n-1) - (n-1)a(n-2) = 0$ | `holonomic` | Exact (22 terms) | 4.38 |
-| `A005259` | Apéry for $\zeta(3)$ | Holonomic (Order 2, Deg 3) | $n^3 a(n) - (34n^3 - 51n^2 + 27n - 5)a(n-1) + (n-1)^3 a(n-2) = 0$ | `holonomic` | Exact (25 terms) | 24.71 |
-| `A005258` | Apéry for $\zeta(2)$ | Holonomic (Order 2, Deg 2) | $n^2 a(n) - (11n^2 - 11n + 3)a(n-1) - (n-1)^2 a(n-2) = 0$ | `holonomic` | Exact (25 terms) | 10.80 |
-| `A001147` | Double factorials | Holonomic (Order 1, Deg 1) | $a(n) - (2n-1)a(n-1) = 0$ | `holonomic` | Exact (22 terms) | 1.83 |
-| `A002620` | Quarter squares | Quasipolynomial (Period 2, Deg 2) | $a(n) = \lfloor n^2 / 4 \rfloor$ | `quasipolynomial` | Exact (30 terms) | 2.90 |
-| `A004526` | Coin change $\{1, 2\}$ | Quasipolynomial (Period 2, Deg 1) | $a(n) = \lfloor n / 2 \rfloor + 1$ | `quasipolynomial` | Exact (25 terms) | 2.48 |
-| `A000058` | Sylvester's sequence | Nonlinear Recurrence (Deg 2) | $a(n) = a(n-1)^2 - a(n-1) + 1$ | `nonlinear_recurrence` | Exact (7 terms) | 0.23 |
-| `A006720` | Somos-4 sequence | Bilinear Recurrence (Order 4) | $a(n)a(n-4) = a(n-1)a(n-3) + a(n-2)^2$ | `nonlinear_recurrence` | Exact (15 terms) | 4.94 |
-| `A001411` | 2D Self-avoiding walks | Open Problem | $a(n) \sim 1.8866 \cdot 2.7146^n$ ($R^2 = 0.9999$) | `asymptotic` | Heuristic (28 terms) | 20.03 |
-| `A080601` | Rubik's cube states | Cayley Graph / Branching | $a(n) \sim 1.3317 \cdot 9.3125^n$ ($R^2 = 1.0000$) | `asymptotic` | Heuristic (16 terms) | 6.64 |
+| `A000108` | Catalan numbers | Holonomic (Order 1, Deg 1) | $(n+1)a(n) - (4n-2)a(n-1) = 0$ | `convolution` / `holonomic` | Exact (25 terms) | 6.02 |
+| `A001006` | Motzkin numbers | Holonomic (Order 2, Deg 1) | $a(n) = a(n-1) + \sum a(k)a(n-2-k)$ | `convolution` / `holonomic` | Exact (25 terms) | 8.87 |
+| `A001850` | Central Delannoy | Holonomic (Order 2, Deg 1) | $n a(n) - (6n-3)a(n-1) + (n-1)a(n-2) = 0$ | `holonomic` | Exact (25 terms) | 8.26 |
+| `A006318` | Large Schröder | Holonomic (Order 2, Deg 1) | $(n+1)a(n) - (6n-3)a(n-1) + (n-2)a(n-2) = 0$ | `holonomic` | Exact (25 terms) | 8.27 |
+| `A000166` | Derangements | Holonomic (Order 2, Deg 1) | $a(n) - (n-1)a(n-1) - (n-1)a(n-2) = 0$ | `holonomic` | Exact (22 terms) | 21.37 |
+| `A005259` | Apéry for $\zeta(3)$ | Holonomic (Order 2, Deg 3) | $n^3 a(n) - (34n^3 - 51n^2 + 27n - 5)a(n-1) + (n-1)^3 a(n-2) = 0$ | `holonomic` | Exact (25 terms) | 37.98 |
+| `A005258` | Apéry for $\zeta(2)$ | Holonomic (Order 2, Deg 2) | $n^2 a(n) - (11n^2 - 11n + 3)a(n-1) - (n-1)^2 a(n-2) = 0$ | `holonomic` | Exact (25 terms) | 27.03 |
+| `A001147` | Double factorials | Holonomic (Order 1, Deg 1) | $a(n) - (2n-1)a(n-1) = 0$ | `holonomic` | Exact (22 terms) | 22.44 |
+| `A002620` | Quarter squares | Quasipolynomial (Period 2, Deg 2) | $a(n) = \lfloor n^2 / 4 \rfloor$ | `quasipolynomial` | Exact (30 terms) | 4.93 |
+| `A004526` | Coin change $\{1, 2\}$ | Quasipolynomial (Period 2, Deg 1) | $a(n) = \lfloor n / 2 \rfloor + 1$ | `quasipolynomial` | Exact (25 terms) | 5.84 |
+| `A000058` | Sylvester's sequence | Nonlinear Recurrence (Deg 2) | $a(n) = a(n-1)^2 - a(n-1) + 1$ | `nonlinear_recurrence` | Exact (7 terms) | 0.50 |
+| `A006720` | Somos-4 sequence | Bilinear Recurrence (Order 4) | $a(n)a(n-4) = a(n-1)a(n-3) + a(n-2)^2$ | `nonlinear_recurrence` | Exact (15 terms) | 13.20 |
+| `A001764` | Ternary trees | Algebraic GF (Degree 3) | $x G(x)^3 - G(x) + 1 = 0$ | `algebraic_generating_function` | Exact (20 terms) | 21.30 |
+| `A002293` | 4-ary trees | Algebraic GF (Degree 4) | $x G(x)^4 - G(x) + 1 = 0$ | `algebraic_generating_function` | Exact (18 terms) | 28.50 |
+| `A002487` | Stern's diatomic sequence | Divide-and-Conquer (2-Regular) | $a(2n) = a(n); a(2n+1) = a(n) + a(n+1)$ | `divide_and_conquer` | Exact (40 terms) | 31.94 |
+| `A000695` | Moser-de Bruijn | Divide-and-Conquer (2-Regular) | $a(2n) = 4a(n); a(2n+1) = 4a(n) + 1$ | `divide_and_conquer` | Exact (40 terms) | 28.12 |
+| `A001316` | Gould's sequence | Divide-and-Conquer (2-Regular) | $a(2n) = a(n); a(2n+1) = 2a(n)$ | `divide_and_conquer` | Exact (40 terms) | 27.50 |
+| `A007676` | $e$ convergents (numerators) | Continued Fraction Convergent | $a(n) = q(n)a(n-1) + a(n-2)$, $q(3k)=2k+2$ | `continued_fraction` | Exact (18 terms) | 27.10 |
+| `A007677` | $e$ convergents (denominators) | Continued Fraction Convergent | $a(n) = q(n)a(n-1) + a(n-2)$, $q(3k)=2k+2$ | `continued_fraction` | Exact (18 terms) | 29.63 |
+| `A001517` | Bessel continued fraction | Continued Fraction Convergent | $a(n) = n a(n-1) + a(n-2)$ | `continued_fraction` | Exact (20 terms) | 22.21 |
+| `A001601` | Lyness rational sequence | Rational Recurrence | $a(n) = (a(n-1) + 1) / a(n-2)$ | `rational_recurrence` | Exact (25 terms) | 32.89 |
+| `A005185` | Hofstadter Q-sequence | Nested Meta-Fibonacci | $a(n) = a(n - a(n-1)) + a(n - a(n-2))$ | `nested_recurrence` | Exact (34 terms) | 35.82 |
+| `A004001` | Hofstadter-Conway $10000 | Nested Meta-Fibonacci | $a(n) = a(a(n-1)) + a(n - a(n-1))$ | `nested_recurrence` | Exact (34 terms) | 38.21 |
+| `A005206` | Hofstadter G-sequence | Nested Meta-Fibonacci | $a(n) = n - a(a(n-1))$ | `nested_recurrence` | Exact (35 terms) | 31.31 |
+| `SYN_INT` | Interleaved powers | Multisection Linear Recurrence | $a(2k) = 2a(2k-2); a(2k+1) = 3a(2k-1)$ | `interleaved_recurrence` | Exact (32 terms) | 33.96 |
+| `SYN_EXP` | Inhomogeneous exponential | Inhomogeneous Exponential | $a(n) = 2a(n-1) + 3^n \equiv 5a(n-1) - 6a(n-2)$ | `inhomogeneous_recurrence` | Exact (16 terms) | 6.02 |
+| `A000041` | Partition numbers $p(n)$ | Modular Product / Euler Transform | $G(x) = \prod_{k=1}^\infty \frac{1}{1-x^k}$ | `modular_product` | Exact (25 terms) | 60.85 |
+| `A000009` | Partitions into distinct parts | Modular Product (Period 2) | $G(x) = \prod_{k \text{ odd}} \frac{1}{1-x^k}$ | `modular_product` | Exact (25 terms) | 62.34 |
+| `A000594` | Ramanujan $\tau$ function | Modular Product | $G(x) = x \prod_{k=1}^\infty (1-x^k)^{24}$ | `modular_product` | Exact (16 terms) | 40.75 |
+| `A003114` | Rogers-Ramanujan partitions | Modular Product (Period 5) | $G(x) = \prod_{k \ge 1} \frac{1}{(1-x^{5k-4})(1-x^{5k-1})}$ | `modular_product` | Exact (28 terms) | 59.34 |
+| `A005329` | $q$-factorials $[n]_2!$ | $q$-Series / Basic Hypergeometric | $a(n) = (2^n - 1) a(n-1)$ | `q_series` | Exact (14 terms) | 52.43 |
+| `SYN_QFIB` | $q$-Fibonacci / Schur recurrence | Second-Order $q$-Recurrence | $a(n) = a(n-1) + 2^{n-2} a(n-2)$ | `q_series` | Exact (14 terms) | 53.43 |
+| `SYN_Q3` | Generalized Hofstadter $Q_{1,3}$ | Nested Meta-Fibonacci ($p=1, q=3$) | $a(n) = a(n - a(n-1)) + a(n - a(n-3))$ | `nested_recurrence` | Exact (31 terms) | 72.44 |
+| `A001411` | 2D Self-avoiding walks | Open Problem / Negative Control | $a(n) \sim 1.8866 \cdot 2.7146^n$ ($R^2 = 0.9999$) | `asymptotic` | Heuristic (28 terms) | 38.36 |
+| `A080601` | Rubik's cube states | Cayley Graph / Negative Control | $a(n) \sim 1.3317 \cdot 9.3125^n$ ($R^2 = 1.0000$) | `asymptotic` | Heuristic (16 terms) | 24.93 |
 
-- **Exact Mathematical Recovery Rate**: **13 / 15 (86.7%)**
-- **Average Computation Time Per Target**: **7.86 ms**
+- **Exact Mathematical Recovery Rate**: **34 / 36 (94.4%)**
+- **Average Computation Time Per Target**: **48.82 ms**
 
 ### 6.3 High Mathematical Importance Benchmark Suite (Lacking %F Formula)
 Evaluation across historically renowned, mathematically open sequences from OEIS that lack an `%F` formula field:

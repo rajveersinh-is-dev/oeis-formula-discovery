@@ -9,16 +9,23 @@ from ..candidate.model import CandidateFormula
 from ..candidate.ranking import CandidateRanker
 from ..discovery.algebraic_gf import AlgebraicGeneratingFunctionDiscovery
 from ..discovery.asymptotic import AsymptoticGrowthDiscovery
+from ..discovery.continued_fraction import ContinuedFractionDiscovery
 from ..discovery.convolution import ConvolutionRecurrenceDiscovery
+from ..discovery.divide_and_conquer import DivideAndConquerDiscovery
 from ..discovery.finite_differences import FiniteDifferenceDiscovery
 from ..discovery.generating_function import GeneratingFunctionDiscovery
 from ..discovery.holonomic import HolonomicDiscovery
 from ..discovery.inhomogeneous import InhomogeneousRecurrenceDiscovery
+from ..discovery.interleaved import InterleavedRecurrenceDiscovery
 from ..discovery.linear_recurrence import LinearRecurrenceDiscovery
 from ..discovery.modular import ModularPatternDiscovery
+from ..discovery.modular_product import ModularProductDiscovery
 from ..discovery.multiplicative import MultiplicativeRecurrenceDiscovery
+from ..discovery.nested_recurrence import NestedRecurrenceDiscovery
 from ..discovery.nonlinear import NonlinearRecurrenceDiscovery
+from ..discovery.q_series import QSeriesDiscovery
 from ..discovery.quasipolynomial import QuasipolynomialDiscovery
+from ..discovery.rational_recurrence import RationalRecurrenceDiscovery
 from ..discovery.symbolic_search import SymbolicExpressionDiscovery
 from ..discovery.transforms import TransformDiscovery
 from ..ingestion.db import OEISDatabase
@@ -30,16 +37,23 @@ class DiscoveryEngine:
         self.db = db
         self.methods = [
             FiniteDifferenceDiscovery(max_degree=6),
+            SymbolicExpressionDiscovery(max_depth=3),
             QuasipolynomialDiscovery(max_period=6, max_degree=4),
             LinearRecurrenceDiscovery(max_order=8),
-            InhomogeneousRecurrenceDiscovery(max_order=3, max_poly_deg=2),
-            HolonomicDiscovery(max_order=4, max_degree=3),
-            AlgebraicGeneratingFunctionDiscovery(max_degree=2),
+            DivideAndConquerDiscovery(bases=[2, 3, 4, 5]),
+            QSeriesDiscovery(bases=[2, 3, -2, 4, 5]),
+            InterleavedRecurrenceDiscovery(periods=[2, 3, 4]),
+            ModularProductDiscovery(max_period=12),
+            InhomogeneousRecurrenceDiscovery(max_order=3, max_poly_deg=3),
+            ContinuedFractionDiscovery(max_period=6),
+            RationalRecurrenceDiscovery(max_order=4),
+            NonlinearRecurrenceDiscovery(max_degree=3, max_somos_k=6),
+            NestedRecurrenceDiscovery(),
+            AlgebraicGeneratingFunctionDiscovery(max_degree=4),
             ConvolutionRecurrenceDiscovery(),
             MultiplicativeRecurrenceDiscovery(max_power=3),
-            NonlinearRecurrenceDiscovery(max_degree=3, max_somos_k=6),
+            HolonomicDiscovery(max_order=4, max_degree=3),
             GeneratingFunctionDiscovery(max_degree=6),
-            SymbolicExpressionDiscovery(max_depth=3),
             TransformDiscovery(),
             ModularPatternDiscovery(max_modulus=12, max_period=16, max_transient=6),
             AsymptoticGrowthDiscovery(),

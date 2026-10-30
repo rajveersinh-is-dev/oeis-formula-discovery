@@ -231,7 +231,337 @@ def generate_hard_benchmark_suite() -> List[Tuple[OEISRecord, str]]:
         "Bilinear Recurrence (Somos-4)"
     ))
 
-    # 14. Self-avoiding walks on square lattice A001411 (Unlisted %F in OEIS)
+    # 14. Ternary trees / 3-Catalan A001764
+    t3_terms = [math.comb(3 * n, n) // (2 * n + 1) for n in range(20)]
+    suite.append((
+        OEISRecord(
+            a_number="A001764",
+            id_number=1764,
+            name="Ternary trees / 3-Catalan numbers",
+            offset_first_term=0,
+            terms=t3_terms,
+        ),
+        "Algebraic GF (Degree 3)"
+    ))
+
+    # 15. 4-ary trees / 4-Catalan A002293
+    t4_terms = [math.comb(4 * n, n) // (3 * n + 1) for n in range(18)]
+    suite.append((
+        OEISRecord(
+            a_number="A002293",
+            id_number=2293,
+            name="4-ary trees / 4-Catalan numbers",
+            offset_first_term=0,
+            terms=t4_terms,
+        ),
+        "Algebraic GF (Degree 4)"
+    ))
+
+    # 16. Stern's diatomic sequence A002487
+    stern = [0, 1]
+    for i in range(2, 40):
+        stern.append(stern[i // 2] if i % 2 == 0 else stern[i // 2] + stern[i // 2 + 1])
+    suite.append((
+        OEISRecord(
+            a_number="A002487",
+            id_number=2487,
+            name="Stern's diatomic sequence",
+            offset_first_term=0,
+            terms=stern,
+        ),
+        "Divide-and-Conquer (Stern)"
+    ))
+
+    # 17. Moser-de Bruijn sequence A000695
+    moser = [0]
+    for i in range(1, 40):
+        moser.append(4 * moser[i // 2] if i % 2 == 0 else 4 * moser[i // 2] + 1)
+    suite.append((
+        OEISRecord(
+            a_number="A000695",
+            id_number=695,
+            name="Moser-de Bruijn sequence",
+            offset_first_term=0,
+            terms=moser,
+        ),
+        "Divide-and-Conquer (2-Regular)"
+    ))
+
+    # 18. Gould's sequence A001316
+    gould = [1]
+    for i in range(1, 40):
+        gould.append(gould[i // 2] if i % 2 == 0 else 2 * gould[i // 2])
+    suite.append((
+        OEISRecord(
+            a_number="A001316",
+            id_number=1316,
+            name="Gould's sequence (odd Pascal counts)",
+            offset_first_term=0,
+            terms=gould,
+        ),
+        "Divide-and-Conquer (Gould)"
+    ))
+
+    # 19. Convergents to e numerators A007676
+    a_cf = [2, 1, 2, 1, 1, 4, 1, 1, 6, 1, 1, 8, 1, 1, 10, 1, 1, 12]
+    e_num = [a_cf[0], a_cf[0] * a_cf[1] + 1]
+    for i in range(2, len(a_cf)):
+        e_num.append(a_cf[i] * e_num[-1] + e_num[-2])
+    suite.append((
+        OEISRecord(
+            a_number="A007676",
+            id_number=7676,
+            name="Numerators of convergents to e",
+            offset_first_term=0,
+            terms=e_num,
+        ),
+        "Continued Fraction (e Numerators)"
+    ))
+
+    # 20. Convergents to e denominators A007677
+    e_den = [1, a_cf[1]]
+    for i in range(2, len(a_cf)):
+        e_den.append(a_cf[i] * e_den[-1] + e_den[-2])
+    suite.append((
+        OEISRecord(
+            a_number="A007677",
+            id_number=7677,
+            name="Denominators of convergents to e",
+            offset_first_term=0,
+            terms=e_den,
+        ),
+        "Continued Fraction (e Denominators)"
+    ))
+
+    # 21. Bessel continued fraction convergents A001517
+    bessel = [1, 1]
+    for n in range(2, 20):
+        bessel.append(n * bessel[-1] + bessel[-2])
+    suite.append((
+        OEISRecord(
+            a_number="A001517",
+            id_number=1517,
+            name="Bessel continued fraction convergents",
+            offset_first_term=0,
+            terms=bessel,
+        ),
+        "Continued Fraction (Bessel)"
+    ))
+
+    # 22. Lyness rational sequence A001601
+    lyness = [1, 2]
+    for n in range(2, 25):
+        lyness.append((lyness[-1] + 1) // lyness[-2])
+    suite.append((
+        OEISRecord(
+            a_number="A001601",
+            id_number=1601,
+            name="Lyness rational recurrence sequence",
+            offset_first_term=0,
+            terms=lyness,
+        ),
+        "Rational Recurrence (Lyness)"
+    ))
+
+    # 23. Hofstadter Q-sequence A005185
+    hq = [1, 1]
+    for n in range(3, 35):
+        hq.append(hq[n - 1 - hq[-1]] + hq[n - 1 - hq[-2]])
+    suite.append((
+        OEISRecord(
+            a_number="A005185",
+            id_number=5185,
+            name="Hofstadter Q-sequence",
+            offset_first_term=1,
+            terms=hq,
+        ),
+        "Nested Meta-Fibonacci (Hofstadter Q)"
+    ))
+
+    # 24. Hofstadter-Conway sequence A004001
+    hconway = [1, 1]
+    for n in range(3, 35):
+        hconway.append(hconway[hconway[-1] - 1] + hconway[n - 1 - hconway[-1]])
+    suite.append((
+        OEISRecord(
+            a_number="A004001",
+            id_number=4001,
+            name="Hofstadter-Conway $10000 sequence",
+            offset_first_term=1,
+            terms=hconway,
+        ),
+        "Nested Meta-Fibonacci (Conway)"
+    ))
+
+    # 25. Hofstadter G-sequence A005206
+    hg = [0]
+    for n in range(1, 35):
+        hg.append(n - hg[hg[-1]])
+    suite.append((
+        OEISRecord(
+            a_number="A005206",
+            id_number=5206,
+            name="Hofstadter G-sequence",
+            offset_first_term=0,
+            terms=hg,
+        ),
+        "Nested Meta-Fibonacci (Hofstadter G)"
+    ))
+
+    # 26. Interleaved geometric progressions
+    interleaved_terms = []
+    for k in range(16):
+        interleaved_terms.append(2**k)
+        interleaved_terms.append(3**k)
+    suite.append((
+        OEISRecord(
+            a_number="SYN_INT",
+            id_number=9998,
+            name="Interleaved powers of 2 and 3",
+            offset_first_term=0,
+            terms=interleaved_terms,
+        ),
+        "Interleaved Multisection Recurrence"
+    ))
+
+    # 27. Inhomogeneous exponential recurrence
+    exp_inhom = [1]
+    for n in range(1, 16):
+        exp_inhom.append(2 * exp_inhom[-1] + 3**n)
+    suite.append((
+        OEISRecord(
+            a_number="SYN_EXP",
+            id_number=9997,
+            name="Inhomogeneous exponential recurrence",
+            offset_first_term=0,
+            terms=exp_inhom,
+        ),
+        "Inhomogeneous Exponential"
+    ))
+
+    # 28. Partition numbers A000041 (Euler product)
+    N_part = 25
+    part_terms = [0] * N_part
+    part_terms[0] = 1
+    for k in range(1, N_part):
+        for i in range(k, N_part):
+            part_terms[i] += part_terms[i - k]
+    suite.append((
+        OEISRecord(
+            a_number="A000041",
+            id_number=41,
+            name="Partition numbers p(n)",
+            offset_first_term=0,
+            terms=part_terms,
+        ),
+        "Modular Product / Euler Transform (c_k = 1)"
+    ))
+
+    # 29. Partitions into distinct parts A000009
+    distinct_terms = [0] * N_part
+    distinct_terms[0] = 1
+    for k in range(1, N_part):
+        for i in range(N_part - 1, k - 1, -1):
+            distinct_terms[i] += distinct_terms[i - k]
+    suite.append((
+        OEISRecord(
+            a_number="A000009",
+            id_number=9,
+            name="Partitions into distinct parts q(n)",
+            offset_first_term=0,
+            terms=distinct_terms,
+        ),
+        "Modular Product (Period 2: [1, 0])"
+    ))
+
+    # 30. Ramanujan's tau function A000594
+    N_tau = 16
+    tau_poly = [0] * N_tau
+    tau_poly[0] = 1
+    for k in range(1, N_tau):
+        for _ in range(24):
+            for i in range(N_tau - 1, k - 1, -1):
+                tau_poly[i] -= tau_poly[i - k]
+    tau_terms = [0] + tau_poly[:-1]
+    suite.append((
+        OEISRecord(
+            a_number="A000594",
+            id_number=594,
+            name="Ramanujan tau function tau(n)",
+            offset_first_term=0,
+            terms=tau_terms,
+        ),
+        "Modular Product (c_k = -24)"
+    ))
+
+    # 31. First Rogers-Ramanujan identity A003114
+    N_rr = 28
+    rr_terms = [0] * N_rr
+    rr_terms[0] = 1
+    for k in range(1, N_rr):
+        for p in (5 * k - 4, 5 * k - 1):
+            if p < N_rr:
+                for i in range(p, N_rr):
+                    rr_terms[i] += rr_terms[i - p]
+    suite.append((
+        OEISRecord(
+            a_number="A003114",
+            id_number=3114,
+            name="First Rogers-Ramanujan sequence",
+            offset_first_term=0,
+            terms=rr_terms,
+        ),
+        "Modular Product (Period 5: [1,0,0,1,0])"
+    ))
+
+    # 32. q-factorials [n]_2! A005329
+    q_facts = [1]
+    for n in range(1, 14):
+        q_facts.append(q_facts[-1] * (2 ** n - 1))
+    suite.append((
+        OEISRecord(
+            a_number="A005329",
+            id_number=5329,
+            name="q-factorial [n]_2!",
+            offset_first_term=0,
+            terms=q_facts,
+        ),
+        "q-Series / Basic Hypergeometric"
+    ))
+
+    # 33. q-Fibonacci / Schur sequence
+    q_fib = [1, 1]
+    for n in range(2, 14):
+        q_fib.append(q_fib[-1] + (2 ** n) * q_fib[-2])
+    suite.append((
+        OEISRecord(
+            a_number="SYN_QFIB",
+            id_number=99901,
+            name="q-Fibonacci / Schur recurrence",
+            offset_first_term=0,
+            terms=q_fib,
+        ),
+        "Second-Order q-Recurrence"
+    ))
+
+    # 34. Generalized Hofstadter Q_3 sequence
+    q3_terms = [1, 1, 1]
+    for n in range(4, 32):
+        t1 = q3_terms[n - 1 - q3_terms[-1]]
+        t2 = q3_terms[n - 1 - q3_terms[-3]]
+        q3_terms.append(t1 + t2)
+    suite.append((
+        OEISRecord(
+            a_number="SYN_Q3",
+            id_number=99902,
+            name="Generalized Hofstadter Q_3",
+            offset_first_term=1,
+            terms=q3_terms,
+        ),
+        "Nested Meta-Fibonacci (p=1, q=3)"
+    ))
+
+    # 35. Self-avoiding walks on square lattice A001411 (Unlisted %F in OEIS)
     saw2d = [1, 4, 12, 36, 100, 284, 780, 2172, 5916, 16268, 44100, 120292, 324932, 881500, 2374444, 6416596, 17245332, 46466676, 124658732, 335116620, 897697164, 2409047612, 6443560484, 17245995004, 46046745156, 123067759508, 328320448108, 877396885276]
     suite.append((
         OEISRecord(
@@ -244,7 +574,7 @@ def generate_hard_benchmark_suite() -> List[Tuple[OEISRecord, str]]:
         "Open Problem / Connective Constant"
     ))
 
-    # 15. Rubik's cube positions at quarter-turn distance A080601 (Unlisted %F in OEIS)
+    # 29. Rubik's cube positions at quarter-turn distance A080601 (Unlisted %F in OEIS)
     rubik = [1, 12, 114, 1068, 10011, 93840, 878880, 8221032, 76787682, 715978168, 6660144988, 61777083040, 571131920874, 5258548999884, 48174548074944, 438604751493776]
     suite.append((
         OEISRecord(

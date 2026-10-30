@@ -87,6 +87,43 @@ def generate_benchmark_suite() -> List[OEISRecord]:
         terms=pow2_terms,
     ))
 
+    # 7. Stern's diatomic sequence: 2-regular recurrence
+    stern = [0, 1]
+    for i in range(2, 35):
+        stern.append(stern[i // 2] if i % 2 == 0 else stern[i // 2] + stern[i // 2 + 1])
+    suite.append(OEISRecord(
+        a_number="A002487",
+        id_number=2487,
+        name="Stern's diatomic (withheld %F)",
+        offset_first_term=0,
+        terms=stern,
+    ))
+
+    # 8. Lyness rational sequence
+    lyness = [1, 2]
+    for n in range(2, 22):
+        lyness.append((lyness[-1] + 1) // lyness[-2])
+    suite.append(OEISRecord(
+        a_number="A001601",
+        id_number=1601,
+        name="Lyness rational recurrence (withheld %F)",
+        offset_first_term=0,
+        terms=lyness,
+    ))
+
+    # 9. Convergents to e (numerators)
+    a_cf = [2, 1, 2, 1, 1, 4, 1, 1, 6, 1, 1, 8, 1, 1, 10]
+    e_num = [a_cf[0], a_cf[0] * a_cf[1] + 1]
+    for i in range(2, len(a_cf)):
+        e_num.append(a_cf[i] * e_num[-1] + e_num[-2])
+    suite.append(OEISRecord(
+        a_number="A007676",
+        id_number=7676,
+        name="Convergents to e numerators (withheld %F)",
+        offset_first_term=0,
+        terms=e_num,
+    ))
+
     return suite
 
 

@@ -47,3 +47,36 @@ def test_cake_numbers_recurrence():
     assert best.verification_status == VerificationStatus.EXACT_MATCH
     assert "a(n-1)" in best.formula_str
     assert best.terms_tested == len(terms)
+
+
+def test_exponential_driving_term():
+    """Inhomogeneous recurrence with exponential driving term: a(n) = 2*a(n-1) + 3^n."""
+    terms = [1]
+    for n in range(1, 16):
+        terms.append(2 * terms[-1] + 3**n)
+
+    discovery = InhomogeneousRecurrenceDiscovery(max_order=2, max_poly_deg=2)
+    cands = discovery.discover("EXP_INHOM", terms, start_index=0)
+
+    assert len(cands) >= 1
+    best = cands[0]
+    assert best.verification_status == VerificationStatus.EXACT_MATCH
+    assert "^n" in best.formula_str
+    assert best.terms_tested == len(terms)
+
+
+def test_dynamic_exponential_driving_term_7():
+    """Inhomogeneous recurrence with base-7 driving term: a(n) = 3*a(n-1) + 7^n."""
+    terms = [1]
+    for n in range(1, 16):
+        terms.append(3 * terms[-1] + 7**n)
+
+    discovery = InhomogeneousRecurrenceDiscovery(max_order=2, max_poly_deg=2)
+    cands = discovery.discover("EXP_INHOM_7", terms, start_index=0)
+
+    assert len(cands) >= 1
+    best = cands[0]
+    assert best.verification_status == VerificationStatus.EXACT_MATCH
+    assert "7^n" in best.formula_str or "3^n" in best.formula_str
+
+

@@ -53,3 +53,32 @@ def test_large_schroder_algebraic_generating_function():
     best = cands[0]
     assert best.verification_status == VerificationStatus.EXACT_MATCH
     assert "G(x)^2" in best.formula_str
+
+
+def test_ternary_trees_algebraic_generating_function():
+    """Ternary trees / 3-Catalan A001764: x*G(x)^3 - G(x) + 1 = 0."""
+    t3 = [math.comb(3 * n, n) // (2 * n + 1) for n in range(16)]
+    discovery = AlgebraicGeneratingFunctionDiscovery(max_degree=4)
+    cands = discovery.discover("A001764", t3, start_index=0)
+
+    assert len(cands) >= 1
+    best = cands[0]
+    assert best.verification_status == VerificationStatus.EXACT_MATCH
+    assert "G(x)^3" in best.formula_str
+    assert "x*G(x)^3 - G(x) + 1 = 0" in best.formula_str
+    assert best.terms_tested == len(t3)
+
+
+def test_4ary_trees_algebraic_generating_function():
+    """4-ary trees / 4-Catalan A002293: x*G(x)^4 - G(x) + 1 = 0."""
+    t4 = [math.comb(4 * n, n) // (3 * n + 1) for n in range(16)]
+    discovery = AlgebraicGeneratingFunctionDiscovery(max_degree=4)
+    cands = discovery.discover("A002293", t4, start_index=0)
+
+    assert len(cands) >= 1
+    best = cands[0]
+    assert best.verification_status == VerificationStatus.EXACT_MATCH
+    assert "G(x)^4" in best.formula_str
+    assert "x*G(x)^4 - G(x) + 1 = 0" in best.formula_str
+    assert best.terms_tested == len(t4)
+

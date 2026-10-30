@@ -54,3 +54,4 @@ def test_bell_binomial_convolution():
     assert best.verification_status == VerificationStatus.EXACT_MATCH
     assert "binom(n-1, k)" in best.formula_str
     assert best.terms_tested == len(bell)
+

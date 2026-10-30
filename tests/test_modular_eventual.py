@@ -26,3 +26,4 @@ def test_eventual_periodicity_with_transient():
     # Test that evaluator reproduces all terms including transient!
     for i, t in enumerate(terms):
         assert best.evaluator(i) == t
+

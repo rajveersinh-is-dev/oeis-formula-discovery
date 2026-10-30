@@ -143,3 +143,4 @@ class ConvolutionRecurrenceDiscovery(DiscoveryMethod):
             verification_status=VerificationStatus.EXACT_MATCH,
         )
         return cand
+

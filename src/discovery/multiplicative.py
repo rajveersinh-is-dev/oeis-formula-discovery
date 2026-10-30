@@ -105,3 +105,4 @@ class MultiplicativeRecurrenceDiscovery(DiscoveryMethod):
 
         init_str = f"a({start_index}) = {initial_terms[0]}, a({start_index+1}) = {initial_terms[1]}"
         return f"a(n) = {core}; with {init_str}"
+

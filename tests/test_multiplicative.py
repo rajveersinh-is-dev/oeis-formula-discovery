@@ -38,3 +38,4 @@ def test_multiplicative_with_scale():
     assert best.verification_status == VerificationStatus.EXACT_MATCH
     assert "2 * a(n-1) * a(n-2)" in best.formula_str
     assert best.terms_tested == len(terms)
+
