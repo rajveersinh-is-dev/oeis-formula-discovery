@@ -53,3 +53,4 @@ def test_period_3_quasipolynomial():
     assert best.verification_status == VerificationStatus.EXACT_MATCH
     assert best.details["period"] == 3
     assert best.details["max_degree"] == 2
+

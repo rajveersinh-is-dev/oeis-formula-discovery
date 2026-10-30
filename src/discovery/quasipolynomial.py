@@ -149,3 +149,4 @@ class QuasipolynomialDiscovery(DiscoveryMethod):
                 "poly_degrees": poly_degrees
             }
         )
+

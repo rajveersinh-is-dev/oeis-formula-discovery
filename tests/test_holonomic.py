@@ -80,3 +80,4 @@ def test_apery_numbers_zeta3():
     assert best.details["order"] == 2
     assert best.details["max_degree"] == 3
     assert best.terms_tested == len(apery)
+

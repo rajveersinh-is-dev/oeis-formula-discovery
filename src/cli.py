@@ -238,8 +238,8 @@ def report(db):
 @click.option(
     "--suite",
     default="standard",
-    type=click.Choice(["standard", "hard", "withheld", "unlisted", "all"]),
-    help="Benchmark suite to run (standard, hard, withheld, unlisted, all)",
+    type=click.Choice(["standard", "hard", "withheld", "unlisted", "importance", "all"]),
+    help="Benchmark suite to run (standard, hard, withheld, unlisted, importance, all)",
 )
 def benchmark(suite):
     """Run the reproducible discovery benchmark suite."""
@@ -248,6 +248,7 @@ def benchmark(suite):
         run_hard_benchmarks,
         run_withheld_benchmark,
         run_unlisted_audit,
+        run_high_importance_benchmark,
     )
 
     if suite in ("standard", "all"):
@@ -262,6 +263,9 @@ def benchmark(suite):
     if suite in ("unlisted", "all"):
         console.print("\n[bold cyan]=== Running Unlisted Formulas Audit (Real OEIS Data) ===[/bold cyan]")
         run_unlisted_audit()
+    if suite in ("importance", "all"):
+        console.print("\n[bold cyan]=== Running High Mathematical Importance Benchmark (Real Open OEIS Targets) ===[/bold cyan]")
+        run_high_importance_benchmark()
 
 
 

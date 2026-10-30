@@ -140,6 +140,9 @@ oeis-discovery benchmark
 # Hard sequence benchmark (Holonomic, Quasipolynomials, Somos, Apery numbers)
 oeis-discovery benchmark --suite hard
 
+# High mathematical importance benchmark (25 open problem sequences)
+oeis-discovery benchmark --suite importance
+
 # Withheld-formula blind recovery benchmark
 oeis-discovery benchmark --suite withheld
 
@@ -186,6 +189,38 @@ All benchmarks are measured in-process using high-resolution hardware performanc
 
 - **Exact Mathematical Recovery Rate**: **13 / 15 (86.7%)**
 - **Average Computation Time Per Target**: **7.86 ms**
+
+### 6.3 High Mathematical Importance Benchmark Suite (Lacking %F Formula)
+Evaluation across historically renowned, mathematically open sequences from OEIS that lack an `%F` formula field:
+
+| A-Number | Sequence Family | Mathematical Domain | Discovered Model / Behavior | Status | Time (ms) |
+| :--- | :--- | :--- | :--- | :--- | :---: |
+| `A001411` | SAW 2D Square Lattice | Statistical Physics (CFT / Polymers) | $a(n) \sim 1.8848 \cdot 2.7149^n$ ($R^2 = 0.9999$) | Heuristic | 18.38 |
+| `A001412` | SAW 3D Cubic Lattice | Statistical Physics (3D Polymers) | $a(n) \sim 1.4577 \cdot 4.7467^n$ ($R^2 = 1.0000$) | Heuristic | 21.89 |
+| `A001334` | SAW Hexagonal Lattice | Statistical Physics (Smirnov Fields Medal) | $a(n) \sim 1.7903 \cdot 4.2972^n$ ($R^2 = 0.9999$) | Heuristic | 28.30 |
+| `A002931` | SAP 2D Square Lattice | Statistical Physics (Polygons) | $a(n) \sim 0.0055 \cdot 5.5093^n$ ($R^2 = 0.9978$) | Heuristic | 23.34 |
+| `A001336` | SAW FCC Lattice | Statistical Physics (Face-Centered Cubic) | $a(n) \sim 1.3163 \cdot 10.2419^n$ ($R^2 = 1.0000$) | Heuristic | 22.07 |
+| `A003198` | Square Bond Percolation | Percolation Theory (Cluster Series) | $a(n) \sim 4.1964 \cdot 2.3017^n$ ($R^2 = 0.9968$) | Heuristic | 11.64 |
+| `A003207` | Cubic Bond Percolation | Percolation Theory (Cluster Series) | $a(n) \sim 2.5754 \cdot 4.4820^n$ ($R^2 = 0.9998$) | Heuristic | 2.28 |
+| `A006727` | Square Percolation Series | Percolation Theory (Susceptibility) | $a(n) \sim 3.0958 \cdot 1.6369^n$ ($R^2 = 0.9922$) | Heuristic | 26.03 |
+| `A006809` | Hex Percolation Series | Percolation Theory (Honeycomb) | $a(n) \sim 2.5267 \cdot 2.3056^n$ ($R^2 = 0.9988$) | Heuristic | 18.23 |
+| `A000791` | Ramsey Numbers $R(3, n)$ | Ramsey Theory (Extremal Combinatorics) | *None (Honest Non-Overfitting)* | `no_candidate` | 0.44 |
+| `A006672` | Ramsey Edge-Coloring | Ramsey Theory (Complete Colorings) | *None (Honest Non-Overfitting)* | `no_candidate` | 1.83 |
+| `A014540` | Rectilinear Crossing $K_n$ | Discrete Geometry (Harary-Hill Conjecture) | *None (Honest Non-Overfitting)* | `no_candidate` | 1.25 |
+| `A000003` | Gauss Class Number $D=-4n$ | Algebraic Number Theory (Gauss Problem) | *None (Honest Non-Overfitting)* | `no_candidate` | 44.15 |
+| `A000924` | Class Number $\mathbb{Q}(\sqrt{-n})$ | Algebraic Number Theory (Dirichlet Formula) | *None (Honest Non-Overfitting)* | `no_candidate` | 42.10 |
+| `A000018` | Integers $x^2 + 16y^2 \le 2^n$ | Analytic Number Theory (Landau-Ramanujan) | $a(n) \sim 0.2751 \cdot 1.9112^n$ ($R^2 = 0.9990$) | Heuristic | 31.42 |
+| `A000021` | Integers $x^2 + 12y^2 \le 2^n$ | Analytic Number Theory (Quadratic Forms) | $a(n) \sim 0.3189 \cdot 1.9137^n$ ($R^2 = 0.9992$) | Heuristic | 29.56 |
+| `A000024` | Integers $x^2 + 10y^2 \le 2^n$ | Analytic Number Theory (Quadratic Forms) | $a(n) \sim 0.3580 \cdot 1.9183^n$ ($R^2 = 0.9994$) | Heuristic | 33.43 |
+| `A000047` | Integers $x^2 - 2y^2 \le 2^n$ | Analytic Number Theory (Indefinite Forms) | $a(n) \sim 0.5511 \cdot 1.9097^n$ ($R^2 = 0.9991$) | Heuristic | 18.87 |
+| `A002106` | Transitive Permutation Groups | Group Theory (O'Nan-Scott / CFSG) | *None (Honest Non-Overfitting)* | `no_candidate` | 26.40 |
+| `A000019` | Primitive Groups of Degree $n$ | Group Theory (Primitive Actions) | *None (Honest Non-Overfitting)* | `no_candidate` | 45.92 |
+| `A003094` | Connected Planar Graphs | Graph Theory (Giménez-Noy Enumeration) | *None (Honest Non-Overfitting)* | `no_candidate` | 5.76 |
+| `A005470` | Unlabeled Planar Graphs | Graph Theory (Planar Graph Asymptotics) | *None (Honest Non-Overfitting)* | `no_candidate` | 5.93 |
+| `A000112` | Unlabeled Posets on $n$ Nodes | Order Theory (Kleitman-Rothschild) | *None (Honest Non-Overfitting)* | `no_candidate` | 6.11 |
+| `A002851` | Unlabeled Trivalent Graphs | Graph Theory (Regular Cubic Graphs) | *None (Honest Non-Overfitting)* | `no_candidate` | 17.68 |
+| `A048987` | Chess Game Tree (Ply $n$) | Game Theory (Shannon Number Complexity) | $a(n) \sim 0.4062 \cdot 27.0991^n$ ($R^2 = 0.9996$) | Heuristic | 6.83 |
+| `A080601` | Rubik's Cube States | Combinatorial State Spaces (Cayley Graph) | $a(n) \sim 1.4025 \cdot 13.2301^n$ ($R^2 = 1.0000$) | Heuristic | 7.06 |
 
 ---
 

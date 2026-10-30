@@ -303,3 +303,4 @@ class HolonomicDiscovery(DiscoveryMethod):
         init_str = "; with " + ", ".join(init_parts) if init_parts else ""
 
         return formula_body + init_str, latex_body
+
