@@ -10,8 +10,11 @@ from ..candidate.ranking import CandidateRanker
 from ..discovery.asymptotic import AsymptoticGrowthDiscovery
 from ..discovery.finite_differences import FiniteDifferenceDiscovery
 from ..discovery.generating_function import GeneratingFunctionDiscovery
+from ..discovery.holonomic import HolonomicDiscovery
 from ..discovery.linear_recurrence import LinearRecurrenceDiscovery
 from ..discovery.modular import ModularPatternDiscovery
+from ..discovery.nonlinear import NonlinearRecurrenceDiscovery
+from ..discovery.quasipolynomial import QuasipolynomialDiscovery
 from ..discovery.symbolic_search import SymbolicExpressionDiscovery
 from ..discovery.transforms import TransformDiscovery
 from ..ingestion.db import OEISDatabase
@@ -23,7 +26,10 @@ class DiscoveryEngine:
         self.db = db
         self.methods = [
             FiniteDifferenceDiscovery(max_degree=6),
+            QuasipolynomialDiscovery(max_period=6, max_degree=4),
             LinearRecurrenceDiscovery(max_order=8),
+            HolonomicDiscovery(max_order=4, max_degree=3),
+            NonlinearRecurrenceDiscovery(max_degree=3, max_somos_k=6),
             GeneratingFunctionDiscovery(max_degree=6),
             SymbolicExpressionDiscovery(max_depth=3),
             TransformDiscovery(),

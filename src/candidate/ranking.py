@@ -18,7 +18,10 @@ class CandidateRanker:
     METHOD_PRIORITY = {
         "finite_differences": 1.0,
         "symbolic_search": 1.5,
+        "quasipolynomial": 1.8,
         "linear_recurrence": 2.0,
+        "nonlinear_recurrence": 2.1,
+        "holonomic": 2.2,
         "generating_function": 2.5,
         "transforms": 3.0,
         "modular": 4.0,

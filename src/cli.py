@@ -235,10 +235,34 @@ def report(db):
 
 
 @main.command()
-def benchmark():
+@click.option(
+    "--suite",
+    default="standard",
+    type=click.Choice(["standard", "hard", "withheld", "unlisted", "all"]),
+    help="Benchmark suite to run (standard, hard, withheld, unlisted, all)",
+)
+def benchmark(suite):
     """Run the reproducible discovery benchmark suite."""
-    from benchmarks.suite import run_benchmarks
-    run_benchmarks()
+    from benchmarks import (
+        run_benchmarks,
+        run_hard_benchmarks,
+        run_withheld_benchmark,
+        run_unlisted_audit,
+    )
+
+    if suite in ("standard", "all"):
+        console.print("[bold cyan]=== Running Standard In-Process Discovery Benchmark ===[/bold cyan]")
+        run_benchmarks()
+    if suite in ("hard", "all"):
+        console.print("\n[bold cyan]=== Running Hard Sequences Benchmark (Holonomic & Quasipolynomials) ===[/bold cyan]")
+        run_hard_benchmarks()
+    if suite in ("withheld", "all"):
+        console.print("\n[bold cyan]=== Running Withheld-Formula Blind Recovery Benchmark ===[/bold cyan]")
+        run_withheld_benchmark()
+    if suite in ("unlisted", "all"):
+        console.print("\n[bold cyan]=== Running Unlisted Formulas Audit (Real OEIS Data) ===[/bold cyan]")
+        run_unlisted_audit()
+
 
 
 if __name__ == "__main__":
