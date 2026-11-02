@@ -708,6 +708,9 @@ class Verifier:
         period: int,
         all_terms: List[int],
         start_index: int,
+        is_linear: bool = False,
+        linear_alpha: int = 1,
+        linear_beta: int = 0,
     ) -> Tuple[bool, int, str]:
         """
         Verifies exact modular products and Euler transform generating functions:
@@ -733,6 +736,8 @@ class Verifier:
 
         # Precompute b_n for n = 1 .. M-1
         def get_c(k: int) -> int:
+            if is_linear:
+                return linear_alpha * k + linear_beta
             if is_periodic:
                 return exponents[(k - 1) % period]
             return exponents[0]

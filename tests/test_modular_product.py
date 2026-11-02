@@ -66,3 +66,18 @@ def test_rogers_ramanujan_first():
     assert best.verification_status == VerificationStatus.EXACT_MATCH
     assert "Rogers-Ramanujan" in best.description or "5k-4" in best.formula_str
     assert best.terms_tested == len(dp)
+
+
+def test_macmahon_plane_partitions():
+    """A000219: MacMahon plane partitions G(x) = prod_{k=1}^inf 1 / (1 - x^k)^k."""
+    # Canonical OEIS A000219 terms
+    plane_partitions = [1, 1, 3, 6, 13, 24, 48, 86, 160, 282, 500, 859, 1479, 2485, 4167, 6879, 11297, 18334, 29601, 47330, 75278, 118794, 186475]
+    discovery = ModularProductDiscovery()
+    cands = discovery.discover("A000219", plane_partitions, start_index=0)
+
+    assert len(cands) >= 1
+    best = cands[0]
+    assert best.verification_status == VerificationStatus.EXACT_MATCH
+    assert "1 / (1 - x^k)^k" in best.formula_str
+    assert best.terms_tested == len(plane_partitions)
+

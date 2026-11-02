@@ -238,14 +238,15 @@ def report(db):
 @click.option(
     "--suite",
     default="standard",
-    type=click.Choice(["standard", "hard", "withheld", "unlisted", "importance", "all"]),
-    help="Benchmark suite to run (standard, hard, withheld, unlisted, importance, all)",
+    type=click.Choice(["standard", "hard", "complex", "withheld", "unlisted", "importance", "all"]),
+    help="Benchmark suite to run (standard, hard, complex, withheld, unlisted, importance, all)",
 )
 def benchmark(suite):
     """Run the reproducible discovery benchmark suite."""
     from benchmarks import (
         run_benchmarks,
         run_hard_benchmarks,
+        run_complex_sequences_benchmark,
         run_withheld_benchmark,
         run_unlisted_audit,
         run_high_importance_benchmark,
@@ -257,6 +258,9 @@ def benchmark(suite):
     if suite in ("hard", "all"):
         console.print("\n[bold cyan]=== Running Hard Sequences Benchmark (Holonomic & Quasipolynomials) ===[/bold cyan]")
         run_hard_benchmarks()
+    if suite in ("complex", "all"):
+        console.print("\n[bold cyan]=== Running Extreme Complexity Benchmark Suite ===[/bold cyan]")
+        run_complex_sequences_benchmark()
     if suite in ("withheld", "all"):
         console.print("\n[bold cyan]=== Running Withheld-Formula Blind Recovery Benchmark ===[/bold cyan]")
         run_withheld_benchmark()

@@ -47,7 +47,7 @@ class DiscoveryEngine:
             InhomogeneousRecurrenceDiscovery(max_order=3, max_poly_deg=3),
             ContinuedFractionDiscovery(max_period=6),
             RationalRecurrenceDiscovery(max_order=4),
-            NonlinearRecurrenceDiscovery(max_degree=3, max_somos_k=6),
+            NonlinearRecurrenceDiscovery(max_degree=3, max_somos_k=7),
             NestedRecurrenceDiscovery(),
             AlgebraicGeneratingFunctionDiscovery(max_degree=4),
             ConvolutionRecurrenceDiscovery(),

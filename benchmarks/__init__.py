@@ -6,6 +6,7 @@ __all__ = [
     "run_unlisted_audit",
     "run_hard_benchmarks",
     "run_high_importance_benchmark",
+    "run_complex_sequences_benchmark",
 ]
 
 
@@ -25,4 +26,7 @@ def __getattr__(name: str):
     if name == "run_high_importance_benchmark":
         from .high_importance_benchmark import run_high_importance_benchmark
         return run_high_importance_benchmark
+    if name == "run_complex_sequences_benchmark":
+        from .complex_sequences_benchmark import run_complex_sequences_benchmark
+        return run_complex_sequences_benchmark
     raise AttributeError(f"module {__name__!r} has no attribute {name!r}")

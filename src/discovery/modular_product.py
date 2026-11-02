@@ -127,6 +127,12 @@ class ModularProductDiscovery(DiscoveryMethod):
             candidates.append(cand_per)
             return candidates
 
+        # 6. Check Case C: Linear exponents c_k = alpha*k + beta (e.g. MacMahon plane partitions)
+        cand_lin = self._check_linear(a_number, terms, start_index, offset_n0, scale, exponents)
+        if cand_lin is not None:
+            candidates.append(cand_lin)
+            return candidates
+
         return candidates
 
     def _check_constant(
@@ -279,5 +285,85 @@ class ModularProductDiscovery(DiscoveryMethod):
                     cand.verification_status = VerificationStatus.EXACT_MATCH
                     cand.terms_tested = matched
                     return cand
+
+        return None
+
+    def _check_linear(
+        self,
+        a_number: str,
+        terms: List[int],
+        start_index: int,
+        offset_n0: int,
+        scale: int,
+        exponents: List[int],
+    ) -> Optional[CandidateFormula]:
+        K = len(exponents)
+        if K < 6:
+            return None
+
+        alpha = exponents[1] - exponents[0]
+        beta = exponents[0] - alpha
+        if alpha == 0:
+            return None
+
+        if not all(exponents[i] == alpha * (i + 1) + beta for i in range(K)):
+            return None
+
+        prefix_parts = []
+        if scale != 1:
+            prefix_parts.append(f"{scale}*")
+        if offset_n0 > 0:
+            x_str = f"x^{offset_n0}" if offset_n0 > 1 else "x"
+            prefix_parts.append(f"{x_str}*")
+        pfx = "".join(prefix_parts)
+
+        if alpha == 1 and beta == 0:
+            prod_str = "prod_{k=1}^inf 1 / (1 - x^k)^k"
+            latex_str = f"G(x) = {pfx}\\prod_{{k=1}}^\\infty \\frac{{1}}{{(1 - x^k)^k}}"
+            desc = "Generating function is MacMahon plane partition product prod_{k=1}^inf 1 / (1 - x^k)^k"
+        elif alpha == -1 and beta == 0:
+            prod_str = "prod_{k=1}^inf (1 - x^k)^k"
+            latex_str = f"G(x) = {pfx}\\prod_{{k=1}}^\\infty (1 - x^k)^k"
+            desc = "Generating function is the product prod_{k=1}^inf (1 - x^k)^k"
+        else:
+            pow_str = f"({alpha}*k + {beta})" if beta != 0 else f"{alpha}*k"
+            prod_str = f"prod_{{k=1}}^inf (1 - x^k)^(-{pow_str})"
+            latex_str = f"G(x) = {pfx}\\prod_{{k=1}}^\\infty (1 - x^k)^{{-({pow_str})}}"
+            desc = f"Generating function is the modular product prod_{{k=1}}^inf (1 - x^k)^(-({pow_str}))"
+
+        formula_str = f"G(x) = {pfx}{prod_str}"
+
+        cand = CandidateFormula(
+            a_number=a_number,
+            method=self.name,
+            formula_str=formula_str,
+            latex_str=latex_str,
+            description=desc,
+            complexity=2.1 + len(str(abs(alpha))) * 0.2 + offset_n0 * 0.3,
+            terms_tested=len(terms),
+            valid_from_index=start_index,
+            initial_conditions=terms[:offset_n0 + 1],
+            details={"offset_n0": offset_n0, "scale": scale, "exponents": exponents[:4], "is_linear": True, "linear_alpha": alpha, "linear_beta": beta},
+            verification_status=VerificationStatus.NO_CANDIDATE_FOUND,
+        )
+
+        is_valid, matched, msg = Verifier.verify_modular_product(
+            candidate=cand,
+            offset_n0=offset_n0,
+            scale=scale,
+            exponents=[],
+            is_periodic=False,
+            period=1,
+            all_terms=terms,
+            start_index=start_index,
+            is_linear=True,
+            linear_alpha=alpha,
+            linear_beta=beta,
+        )
+
+        if is_valid:
+            cand.verification_status = VerificationStatus.EXACT_MATCH
+            cand.terms_tested = matched
+            return cand
 
         return None

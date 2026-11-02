@@ -140,7 +140,7 @@ Parses records and builds local SQLite target index.
 ```bash
 oeis-discovery discover A000045
 ```
-Runs all 14 deterministic discovery engines against the target sequence and outputs ranked candidates.
+Runs all 21 deterministic discovery engines against the target sequence and outputs ranked candidates.
 
 ### List Unsolved Target Sequences
 ```bash
@@ -159,10 +159,13 @@ Runs bounded-budget discovery across eligible targets with transactional checkpo
 # Standard in-process performance benchmarks
 oeis-discovery benchmark
 
-# Hard sequence benchmark (Holonomic, Quasipolynomials, Somos, Apery numbers)
+# Hard sequence benchmark (Holonomic, Quasipolynomials, Somos, Apery numbers, q-Series, Meta-Fibonacci)
 oeis-discovery benchmark --suite hard
 
-# High mathematical importance benchmark (25 open problem sequences)
+# Extreme mathematical complexity benchmark (Domb numbers, Franel cubes/4th powers, MacMahon plane partitions, Somos-6/7, Calabi-Yau)
+oeis-discovery benchmark --suite complex
+
+# High mathematical importance benchmark (27 open problem sequences)
 oeis-discovery benchmark --suite importance
 
 # Withheld-formula blind recovery benchmark

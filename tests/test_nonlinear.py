@@ -64,6 +64,19 @@ def test_somos_5_recurrence():
     assert best.terms_tested == len(somos5)
 
 
+def test_somos_7_recurrence():
+    """Somos-7 A006723: a(n)*a(n-7) = a(n-1)*a(n-6) + a(n-2)*a(n-5) + a(n-3)*a(n-4)."""
+    somos7 = [1, 1, 1, 1, 1, 1, 1, 3, 5, 9, 17, 41, 137, 769, 1925, 7203, 34081, 227321]
+    discovery = NonlinearRecurrenceDiscovery(max_somos_k=7)
+    cands = discovery.discover("A006723", somos7, start_index=0)
+
+    assert len(cands) >= 1
+    best = [c for c in cands if c.details.get("type") == "somos_bilinear"][0]
+    assert best.verification_status == VerificationStatus.EXACT_MATCH
+    assert "a(n)*a(n-7) = a(n-1)*a(n-6) + a(n-2)*a(n-5) + a(n-3)*a(n-4)" in best.formula_str
+    assert best.terms_tested == len(somos7)
+
+
 def test_prime_numbers_rejection():
     """Primes cannot satisfy low-degree polynomial map or Somos recurrence."""
     primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]
